@@ -135,6 +135,35 @@ class Interface_graphique:
         self.afficher_skin()
 
 
+    #Fonction de reset
+
+    def reset_jeu(self):
+        """Fonction qui réinitialise toute les classes et variables du jeu
+
+        Variables:
+            Logique.life: Réinitialisation des vies
+            Briques: appel de la classe Briques qui gère l'état des briques
+            Planche: appel de la classe Planche qui gère la planche et ses déplacements
+            Commande: appel de la classe Commande_clavier qui récupère les actions claviers
+            Balle: appel de la classe Balle qui gère les déplacements, les collisions,etc... de la balle
+        """
+
+        self.logique.life = 3
+        self.briques = Briques(self.canevas, self.logique, self)
+        self.planche = Planche(self.canevas)
+        self.commande = Commande_clavier(self.canevas, self.planche)
+        self.balle = Balle(self.canevas, self.planche, self.briques, self.logique, self)
+
+    def reset_score(self):
+        """Fonction qui reset le score
+
+        Variables:
+            Logique.score: Réinitialisation du score
+        """
+
+        self.logique.score = 0
+
+
     #Affichage début du jeu, victoire et défaite :
 
     def demarrer_jeu(self):
@@ -181,7 +210,7 @@ class Interface_graphique:
         self.recommencer = tk.Button(self.canevas, text="R E C O M M E N C E R", bg="#F7DD68",     highlightcolor="white", width=25, height=2, anchor="center", font=("Arial", 14), command=lambda:[self.reset_jeu(), self.demarrer_jeu(), self.reset_score()])
         
         #Création de bouton avec comme commande la réinitialisation du jeu et du score puis l'écran menu_ecran()
-        self.menu = tk.Button(self.canevas, text="M E N U", bg="#F7DD68",     highlightcolor="white", width=10, height=2, font=("Arial", 14), anchor="center", command=lambda:[self.reset_jeu(), self.menu_ecran(), self.reset_score])
+        self.menu = tk.Button(self.canevas, text="M E N U", bg="#F7DD68",     highlightcolor="white", width=10, height=2, font=("Arial", 14), anchor="center", command=lambda:[self.reset_jeu(), self.menu_ecran(), self.reset_score()])
         
         #Appel de la fonction pour arrêter les déplacement de la balle
         self.balle.stop_balle()
@@ -223,38 +252,6 @@ class Interface_graphique:
         self.menu_vic = tk.Button(self.canevas, text="M E N U", bg="#F7DD68",     highlightcolor="white", width=10, height=2, font=("Arial", 14), anchor="center", command=lambda:[self.reset_jeu(), self.menu_ecran()])
         self.canevas.create_window(500,460, window = self.niv_suivant,tags="menu_victoire")
         self.canevas.create_window(500,520, window = self.menu_vic, tags="menu_victoire")
-
-
-    #Fonction de reset
-
-    def reset_jeu(self):
-        """Fonction qui réinitialise toute les classes et variables du jeu
-
-        Variables:
-            Logique.life: Réinitialisation des vies
-            Briques: appel de la classe Briques qui gère l'état des briques
-            Planche: appel de la classe Planche qui gère la planche et ses déplacements
-            Commande: appel de la classe Commande_clavier qui récupère les actions claviers
-            Balle: appel de la classe Balle qui gère les déplacements, les collisions,etc... de la balle
-        """
-
-        self.logique.life = 3
-        self.briques = Briques(self.canevas, self.logique, self)
-        self.planche = Planche(self.canevas)
-        self.commande = Commande_clavier(self.canevas, self.planche)
-        self.balle = Balle(self.canevas, self.planche, self.briques, self.logique, self)
-
-        #Appel d'une fonction qui stop la balle
-        self.balle.stop_balle()
-
-    def reset_score(self):
-        """Fonction qui reset le score
-
-        Variables:
-            Logique.score: Réinitialisation du score
-        """
-
-        self.logique.score = 0
 
 
     #Fonction de mise à jour

@@ -60,6 +60,7 @@ class Balle:
         #Reset de toutes les variables de la balle
         self.x = 500
         self.y = 659
+        self.vitesse = 12
         self.angle = random.uniform(math.pi/6, (5*math.pi)/6)
         self.dx = self.vitesse * math.cos(self.angle)
         self.dy = -(self.vitesse * math.sin(self.angle))
